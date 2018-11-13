@@ -1,4 +1,4 @@
-package com.edutilos.com.edutilos.dao;
+package com.edutilos.dao;
 
 import java.util.List;
 

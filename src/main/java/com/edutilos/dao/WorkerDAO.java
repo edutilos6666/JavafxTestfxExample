@@ -1,16 +1,17 @@
-package com.edutilos.com.edutilos.dao;
+package com.edutilos.dao;
 
-import com.edutilos.model.Person;
+import com.edutilos.model.Worker;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 
-public class PersonDAO implements DAO<Person, Long> {
+
+public class WorkerDAO implements DAO<Worker,Long> {
     private SessionFactory factory;
 
-    public PersonDAO() {
+    public WorkerDAO() {
         initFactory();
     }
 
@@ -21,13 +22,13 @@ public class PersonDAO implements DAO<Person, Long> {
     public void closeFactory() {
         if(factory != null && factory.isOpen()) factory.close();
     }
-
+  
     @Override
-    public void create(Person person) {
+    public void create(Worker worker) {
         Session session = factory.openSession();
         try {
             session.getTransaction().begin();
-            session.save(person);
+            session.save(worker);
             session.getTransaction().commit();
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -38,16 +39,11 @@ public class PersonDAO implements DAO<Person, Long> {
     }
 
     @Override
-    public void save(Long id, Person person) {
+    public void save(Long aLong, Worker worker) {
         Session session = factory.openSession();
         try {
             session.getTransaction().begin();
-            Person one = session.find(Person.class, id);
-            one.setName(person.getName());
-            one.setAge(person.getAge());
-            one.setWage(person.getWage());
-            one.setActive(person.isActive());
-            session.merge(one);
+            session.merge(worker);
             session.getTransaction().commit();
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -62,8 +58,8 @@ public class PersonDAO implements DAO<Person, Long> {
         Session session = factory.openSession();
         try {
             session.getTransaction().begin();
-            Person one = session.find(Person.class, id);
-            session.delete(one);
+            Worker worker = session.find(Worker.class, id);
+            session.delete(worker);
             session.getTransaction().commit();
         } catch(Exception ex) {
             ex.printStackTrace();
@@ -74,19 +70,19 @@ public class PersonDAO implements DAO<Person, Long> {
     }
 
     @Override
-    public Person find(Long id) {
-        Person ret = null;
+    public Worker find(Long id) {
+        Worker ret = null;
         Session session = factory.openSession();
-        ret = session.find(Person.class, id);
+        ret = session.find(Worker.class, id);
         session.close();
         return ret;
     }
 
     @Override
-    public List<Person> findAll() {
-        List<Person> all = null;
+    public List<Worker> findAll() {
+        List<Worker> all = null;
         Session session = factory.openSession();
-        all = session.createQuery("from Person", Person.class).getResultList();
+        all = session.createQuery("from Worker", Worker.class).getResultList();
         session.close();
         return all;
     }

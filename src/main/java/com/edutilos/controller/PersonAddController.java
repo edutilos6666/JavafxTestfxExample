@@ -1,11 +1,10 @@
 package com.edutilos.controller;
 
-import com.edutilos.com.edutilos.dao.DAO;
-import com.edutilos.com.edutilos.dao.PersonDAO;
+import com.edutilos.dao.DAO;
+import com.edutilos.dao.PersonDAO;
 import com.edutilos.model.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
