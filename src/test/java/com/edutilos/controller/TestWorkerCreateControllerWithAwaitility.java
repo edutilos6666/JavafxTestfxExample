@@ -27,6 +27,7 @@ import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import static org.hamcrest.core.Is.is;
@@ -77,16 +78,18 @@ public class TestWorkerCreateControllerWithAwaitility extends ApplicationTest {
 
     @Test
     public void test_A_CreateWorkerOk() {
+        WaitForAsyncUtils.waitForFxEvents();
         Button btnCreate = (Button)GuiTest.find("#btnCreate");
         clickOn(btnCreate);
+        moveTo(lookup("#fieldId").query().getScene().getWindow());
 //        Awaitility.await().until(()-> lookup("#fieldId").query() != null);
-        WaitForAsyncUtils.waitForFxEvents();
-        WaitForAsyncUtils.asyncFx(()-> {
-            return lookup("#lblTitle").query() != null &&
-                    ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker")
-//                    && ((Label)lookup("#lblTitle").query()).getScene().getWindow().
-                    ;
-        });
+//        WaitForAsyncUtils.waitForFxEvents();
+//        WaitForAsyncUtils.asyncFx(()-> {
+//            return lookup("#lblTitle").query() != null &&
+//                    ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker")
+////                    && ((Label)lookup("#lblTitle").query()).getScene().getWindow().
+//                    ;
+//        });
 //        WaitForAsyncUtils.waitForFxEvents();
 /*
         WaitForAsyncUtils.waitForAsyncFx(5000, ()-> {
@@ -123,17 +126,19 @@ public class TestWorkerCreateControllerWithAwaitility extends ApplicationTest {
 
     @Test
     public void test_B_CreateWorkerClear() {
+        WaitForAsyncUtils.waitForFxEvents();
         Button btnCreate = (Button)GuiTest.find("#btnCreate");
         clickOn(btnCreate);
+        moveTo(lookup("#fieldId").query().getScene().getWindow());
 //        WaitForAsyncUtils.waitForFxEvents();
 //        Awaitility.await().until(()-> lookup("#fieldId").query() != null);
-        WaitForAsyncUtils.waitForFxEvents();
-        WaitForAsyncUtils.asyncFx(()-> {
-            return lookup("#lblTitle").query() != null &&
-                    ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker")
-//                    && ((Label)lookup("#lblTitle").query()).getScene().getWindow().
-                    ;
-        });
+//        WaitForAsyncUtils.waitForFxEvents();
+//        WaitForAsyncUtils.asyncFx(()-> {
+//            return lookup("#lblTitle").query() != null &&
+//                    ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker")
+////                    && ((Label)lookup("#lblTitle").query()).getScene().getWindow().
+//                    ;
+//        });
         TextField fieldId, fieldName, fieldAge, fieldWage, fieldActive;
         Button btnOk, btnClear, btnCancel;
         fieldId = (TextField)GuiTest.find("#fieldId");
@@ -167,17 +172,19 @@ public class TestWorkerCreateControllerWithAwaitility extends ApplicationTest {
 
     @Test
     public void test_C_CreateWorkerCancel() {
+        WaitForAsyncUtils.waitForFxEvents();
         Button btnCreate = (Button)GuiTest.find("#btnCreate");
         clickOn(btnCreate);
+        moveTo(lookup("#fieldId").query().getScene().getWindow());
 //        WaitForAsyncUtils.waitForFxEvents();
 //        Awaitility.await().until(()-> lookup("#fieldId").query() != null);
-        WaitForAsyncUtils.waitForFxEvents();
-        WaitForAsyncUtils.asyncFx(()-> {
-            return lookup("#lblTitle").query() != null &&
-                    ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker")
-//                    && ((Label)lookup("#lblTitle").query()).getScene().getWindow().
-                    ;
-        });
+//        WaitForAsyncUtils.waitForFxEvents();
+//        WaitForAsyncUtils.asyncFx(()-> {
+//            return lookup("#lblTitle").query() != null &&
+//                    ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker")
+////                    && ((Label)lookup("#lblTitle").query()).getScene().getWindow().
+//                    ;
+//        });
         TextField fieldId, fieldName, fieldAge, fieldWage, fieldActive;
         Button btnOk, btnClear, btnCancel;
         fieldId = (TextField)GuiTest.find("#fieldId");
@@ -198,20 +205,31 @@ public class TestWorkerCreateControllerWithAwaitility extends ApplicationTest {
         clickOn(fieldActive);
         write("true");
         clickOn(btnCancel);
+        clickOn("Yes");
+        sleep(3000);
         assertThat(btnCancel.getScene().getWindow().isShowing(), is(false));
     }
 
+    private static final int SECONDS = 2;
     @Test
-    public void test_D_createWorkerOkWithKeyPressed() {
+    public void test_D_createWorkerOkWithKeyPressed() throws TimeoutException {
+        WaitForAsyncUtils.waitForFxEvents();
         Button btnCreate = lookup("#btnCreate").query();
         clickOn(btnCreate);
-        WaitForAsyncUtils.waitForFxEvents();
-        WaitForAsyncUtils.asyncFx(()-> {
-            return lookup("#lblTitle").query() != null &&
-                    ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker")
-//                    && ((Label)lookup("#lblTitle").query()).getScene().getWindow().
-                    ;
-        });
+        moveTo(lookup("#fieldId").query().getScene().getWindow());
+//        WaitForAsyncUtils.waitFor(SECONDS, TimeUnit.SECONDS, () -> {
+//           return  lookup("#fieldId").query().isVisible();
+//        });
+//        WaitForAsyncUtils.waitForFxEvents();
+//        WaitForAsyncUtils.asyncFx(()-> {
+//           return lookup("#fieldId").query().isVisible();
+//        });
+//        WaitForAsyncUtils.asyncFx(()-> {
+//            return lookup("#lblTitle").query() != null &&
+//                    ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker")
+////                    && ((Label)lookup("#lblTitle").query()).getScene().getWindow().
+//                    ;
+//        });
 //        Awaitility.await().until(()-> lookup("#lblTitle").query() != null &&
 //                ((Label)lookup("#lblTitle").query()).getText().equalsIgnoreCase("Create New Worker"));
         TextField fieldId, fieldName, fieldAge, fieldWage, fieldActive;

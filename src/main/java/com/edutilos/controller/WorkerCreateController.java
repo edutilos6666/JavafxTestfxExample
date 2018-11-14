@@ -10,12 +10,12 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 /**
  * Created by edutilos on 13.11.18.
@@ -29,6 +29,8 @@ public class WorkerCreateController {
     @FXML
     private Button btnOk, btnClear, btnCancel;
     private WorkerDAO workerDAO;
+
+    private boolean valueChanged;
 
     @FXML
     public void initialize() {
@@ -103,7 +105,14 @@ public class WorkerCreateController {
         });
 
         btnCancel.setOnAction(evt-> {
-            ((Stage)btnCancel.getScene().getWindow()).close();
+            if(!valueChanged) {
+                ((Stage)btnCancel.getScene().getWindow()).close();
+            } else {
+                Optional<ButtonType> answer = CustomDialogs.showConfirmationDialog("Question", "Do you want to leave the stage?");
+                if(answer.isPresent() && answer.get().getButtonData().getTypeCode().equals(ButtonBar.ButtonData.OK_DONE.getTypeCode())) {
+                    ((Stage)btnCancel.getScene().getWindow()).close();
+                }
+            }
         });
 
         fieldId.setOnKeyPressed(evt-> {
@@ -182,30 +191,35 @@ public class WorkerCreateController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 lblIdError.setText(CustomValidator.validateLong(newValue));
+                valueChanged = true;
             }
         });
         fieldName.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 lblNameError.setText(CustomValidator.validateString(newValue));
+                valueChanged = true;
             }
         });
         fieldAge.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 lblAgeError.setText(CustomValidator.validateInt(newValue));
+                valueChanged = true;
             }
         });
         fieldWage.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 lblWageError.setText(CustomValidator.validateDouble(newValue));
+                valueChanged = true;
             }
         });
         fieldActive.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 lblActiveError.setText(CustomValidator.validateBoolean(newValue));
+                valueChanged = true;
             }
         });
 
